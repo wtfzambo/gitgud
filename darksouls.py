@@ -3,10 +3,8 @@ import enum
 import os
 import subprocess
 
-os.system("color")
+os.system("")
 
-RED_DARK = "\033[31m"
-END = "\033[0m"
 
 YOU_DIED = """
 ⢰⣶⣶⣤⣤⡄⠀⠀⠀⠀⢰⣶⣶⣶⣶⠀⢀⣠⣶⣿⡆⣿⣷⣦⣄⠀⠀⠀⠀⢶⣶⣶⣶⣶⡆⠀⠀⠀⠀⣶⣶⣶⣶⡆⠀⠀⠀⠀⢶⣶⣶⣶⢠⣶⣶⣶⣶⣦⣄⠀⠀⠀⠀⣶⣶⣶⣶⣶⠰⣿⣷⣶⣶⣶⣶⣶⣶⡶⢶⣶⣶⡆⣶⣶⣶⣶⣶⣤⣄⠀⠀⠀⠀
@@ -29,6 +27,12 @@ class ExitCode(enum.IntEnum):
     NOT_REPO = 0
 
 
+def print_red(msg: str):
+    RED_DARK = "\033[31m"
+    END = "\033[0m"
+    print(RED_DARK + msg + END)
+
+
 def find_repo_root(path: str = ".") -> str | None:
     current_path = os.path.abspath(path)
     while True:
@@ -40,38 +44,32 @@ def find_repo_root(path: str = ".") -> str | None:
         current_path = parent_path
 
 
-def you_died():
-    print(RED_DARK + YOU_DIED + END)
-
-
-def run_tests(test_command: str):
+def run_tests(test_command: str) -> tuple[ExitCode, str]:
     repo_root = find_repo_root(os.getcwd())
     if not repo_root:
-        print("Not in a git repository.")
-        return ExitCode.NOT_REPO
+        return ExitCode.NOT_REPO, ""
 
-    print(f"Dark Souls: Running test command '{test_command}' in {repo_root}")
+    exit_code = ExitCode.SUCCESS
+    death_message = ""
 
     try:
         command_parts = test_command.split()
         result = subprocess.run(
             command_parts,
             cwd=repo_root,  # Run the command from the repo root
-            capture_output=True,
-            text=True,
-            check=False,  # Don't raise CalledProcessError on non-zero exit
+            capture_output=True,  # Capture stdout and stderr
+            text=True,  # Return output as string
+            check=False,  # Don't raise on non-zero exit
         )
+        if result.returncode == ExitCode.FAILURE:
+            exit_code = ExitCode.FAILURE
+            death_message = "Your tests failed."
 
-        if result.returncode == ExitCode.SUCCESS:
-            print("Dark Souls: Tests passed! Your code is safe... this time.")
-            return ExitCode.SUCCESS
-        else:
-            print("Dark Souls: Tests failed. You died.")
-            return ExitCode.FAILURE
+    except Exception:
+        exit_code = ExitCode.FAILURE
+        death_message = "An error occurred while running tests."
 
-    except Exception as e:
-        print(f"Dark Souls: An error occurred: {e}")
-        return ExitCode.FAILURE
+    return exit_code, death_message
 
 
 def main():
@@ -85,10 +83,12 @@ def main():
     )
 
     args = parser.parse_args()
-    exit_code = run_tests(args.test_command)  # pyright: ignore[reportAny]
+    exit_code, death_message = run_tests(args.test_command)  # pyright: ignore[reportAny]
 
     if exit_code is ExitCode.FAILURE:
-        you_died()
+        width = len(YOU_DIED.strip().split("\n")[0])
+        print_red(death_message.center(width))
+        print_red(YOU_DIED)
     else:
         print("Dark Souls: You have proven yourself worthy.")
 
