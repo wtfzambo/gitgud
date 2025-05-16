@@ -57,6 +57,8 @@ def run_tests(test_command: str):
         result = subprocess.run(
             command_parts,
             cwd=repo_root,  # Run the command from the repo root
+            capture_output=True,
+            text=True,
             check=False,  # Don't raise CalledProcessError on non-zero exit
         )
 
