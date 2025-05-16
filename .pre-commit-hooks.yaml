@@ -1,0 +1,8 @@
+- id: darksouls
+  name: Darksouls
+  entry: darksouls
+  description: Xtreme programming Darksouls style. Are you brave enough?
+  language: python
+  stages: [pre-commit]
+  always_run: true
+  verbose: true
