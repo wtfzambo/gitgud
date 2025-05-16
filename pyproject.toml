@@ -12,3 +12,7 @@ darksouls = "darksouls:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.basedpyright]
+typeCheckingMode = "recommended"
+reportUnusedCallResult = false
