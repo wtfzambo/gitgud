@@ -97,7 +97,7 @@ def main():
     if exit_code is ExitCode.FAILURE:
         reset_repo()
         width = len(YOU_DIED.strip().split("\n")[0])
-        print_red(death_message.center(width))
+        print_red("\n" + death_message.center(width))
         print_red(YOU_DIED)
 
     return exit_code
