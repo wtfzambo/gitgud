@@ -63,13 +63,22 @@ def run_tests(test_command: str) -> tuple[ExitCode, str]:
         )
         if result.returncode == ExitCode.FAILURE:
             exit_code = ExitCode.FAILURE
-            death_message = "Your tests failed."
+            death_message = "Your tests failed. Git gud."
 
     except Exception:
         exit_code = ExitCode.FAILURE
-        death_message = "An error occurred while running tests."
+        death_message = (
+            "Could not execute the test command. The journey ended before it began."
+        )
 
     return exit_code, death_message
+
+
+def reset_repo() -> None:
+    repo_root = find_repo_root(os.getcwd())
+    if not repo_root:
+        return
+    subprocess.run(["git", "reset", "--hard"], cwd=repo_root, check=False)
 
 
 def main():
@@ -86,11 +95,10 @@ def main():
     exit_code, death_message = run_tests(args.test_command)  # pyright: ignore[reportAny]
 
     if exit_code is ExitCode.FAILURE:
+        reset_repo()
         width = len(YOU_DIED.strip().split("\n")[0])
         print_red(death_message.center(width))
         print_red(YOU_DIED)
-    else:
-        print("Dark Souls: You have proven yourself worthy.")
 
     return exit_code
 

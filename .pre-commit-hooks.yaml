@@ -1,7 +1,7 @@
 - id: darksouls
-  name: Darksouls
+  name: Dark Souls
   entry: darksouls
-  description: Xtreme programming Darksouls style. Are you brave enough?
+  description: Xtreme programming Dark Souls style. Are you brave enough?
   language: python
   pass_filenames: false
   stages: [pre-commit]
