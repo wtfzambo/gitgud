@@ -25,7 +25,7 @@ Once `pre-commit` is installed, all you have to do is create a new file in the p
 ```yml
 repos:
   - repo: https://github.com/wtfzambo/gitgud
-    rev: 1.0.0
+    rev: 1.0.1
     hooks:
       - id: gitgud
         args: ["--test-command", "<insert test command here>"]
