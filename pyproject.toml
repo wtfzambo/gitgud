@@ -1,13 +1,13 @@
 [project]
-name = "darksouls"
+name = "gitgud"
 version = "0.1.0"
-description = "Add your description here"
+description = "Git Gud brings Dark Souls to programming. Are you brave enough?"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = []
 
 [project.scripts]
-darksouls = "darksouls:main"
+gitgud = "gitgud:main"
 
 [build-system]
 requires = ["hatchling"]
