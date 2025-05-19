@@ -93,7 +93,3 @@ def main():
         print_red(NICE_MSG)
 
     return exit_code
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
