@@ -1,7 +1,7 @@
-- id: darksouls
-  name: Dark Souls
-  entry: darksouls
-  description: Xtreme programming Dark Souls style. Are you brave enough?
+- id: gitgud
+  name: Gid Gud
+  entry: gitgud
+  description: Git Gud brings Dark Souls to programming. Are you brave enough?
   language: python
   pass_filenames: false
   stages: [pre-commit]

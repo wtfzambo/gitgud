@@ -49,6 +49,9 @@ def run_tests(test_command: str) -> tuple[ExitCode, str]:
     if not repo_root:
         return ExitCode.NOT_REPO, ""
 
+    if not test_command:
+        return ExitCode.FAILURE, "Think you can escape your fate? Think again."
+
     exit_code = ExitCode.SUCCESS
     death_message = ""
 
@@ -92,6 +95,7 @@ def main():
     )
 
     args = parser.parse_args()
+
     exit_code, death_message = run_tests(args.test_command)  # pyright: ignore[reportAny]
 
     if exit_code is ExitCode.FAILURE:
