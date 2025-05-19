@@ -1,6 +1,6 @@
 [project]
 name = "gitgud"
-version = "1.0.0"
+version = "1.0.1"
 description = "Git Gud brings Dark Souls to programming. Are you brave enough?"
 readme = "README.md"
 requires-python = ">=3.8"
